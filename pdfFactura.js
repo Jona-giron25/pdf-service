@@ -299,7 +299,7 @@ try {
 
 try {
 // 🔵 Posición alineada con los totales
-const imageY = notesStartY + 40;
+const imageY = notesStartY + 60;
 
 // 🔵 Dibujar imagen
 doc.image(
