@@ -270,57 +270,24 @@ const notesWidth = 300;
 
 const imageX = 360;
 
+// 🔵 TÍTULO
 doc
   .fillColor("#000")
   .font("Helvetica-Bold")
   .fontSize(10)
-  .text("NOTAS IMPORTANTES:", notesX, notesStartY, { width: notesWidth });
+  .text("NOTAS IMPORTANTES:", notesX, notesStartY);
 
+// 🔵 ESPACIO
 doc.moveDown(0.5);
 
-doc
-  .font("Helvetica-Bold")
-  .fontSize(9)
-  .text("PRECIOS INCLUYEN:", { width: notesWidth });
-
+// 🔵 CONTENIDO DINÁMICO
 doc
   .font("Helvetica")
   .fontSize(9)
-  .text("- Diseño, Impresión y Elaboración de la Lona Completamente Personalizada.", { width: notesWidth })
-  .text(`- Motor ${factura.motor_voltaje || ""} de Acuerdo a la Cantidad de Metros Cúbicos Requeridos.`, { width: notesWidth })
-  .text("- Bolso para Transporte del Inflable.", { width: notesWidth })
-
-doc.moveDown(0.5);
-
-doc
-  .font("Helvetica-Bold")
-  .text("GARANTIA: 1 Año por Desperfectos de Fábrica.", { width: notesWidth });
-
-doc
-  .font("Helvetica-Bold")
-  .text("INSTALACION: Plug And Play (PNP).", { width: notesWidth });
-
-doc
-  .text("ENVIO: Gratis a Nivel Nacional (Honduras).", { width: notesWidth });
-
-doc.moveDown(0.8);
-
-doc
-  .font("Helvetica-Bold")
-  .text("REQUISITOS PARA LA ELABORACION:", { width: notesWidth });
-
-doc
-  .font("Helvetica")
-  .text("- ANTICIPO: 50% del valor de la cotización al iniciar y 50% del valor restante contra entrega.", { width: notesWidth })
-  .text(`- TIEMPO DE ENTREGA: ${factura.tiempo_entrega || ""} Días Hábiles.`, { width: notesWidth })
-  .text("- ARTES: Aprobación de los artes finales y aprobación de la prueba de pantalla final.", { width: notesWidth });
-
-doc.moveDown(0.8);
-
-doc
-  .font("Helvetica-Bold")
-  .text(
-    "LA ELABORACIÓN DE ESTE PRODUCTO ESTÁ SUJETA A NUESTRAS POLÍTICAS, TÉRMINOS Y CONDICIONES.", { width: notesWidth });
+  .text(factura.notas || "", notesX, doc.y, {
+    width: notesWidth,
+    lineGap: 2
+  });
   
 try {
   doc.image(path.join(__dirname, "assets/certificaciones.png"), notesX, doc.y + 20, {
