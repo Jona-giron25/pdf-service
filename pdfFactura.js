@@ -303,15 +303,20 @@ try {
 if (imageY < notesStartY + 100) {
   imageY = notesStartY + 100;
 }
+const imagePath = path.join(__dirname, "assets/inflables-productos.png");
 
-doc.image(
-  path.join(__dirname, "assets/inflables-productos.png"),
-  imageX,
-  imageY,
-  {
-    width: 200
+if (fs.existsSync(imagePath)) {
+  try {
+    doc.image(imagePath, imageX, imageY, {
+      width: 200
+    });
+  } catch (error) {
+    console.log("Error cargando imagen:", error.message);
   }
-);
+} else {
+  console.log("Imagen NO encontrada:", imagePath);
+}
+
 } catch (e) {
   console.log("Error productos:", e.message);
 }
