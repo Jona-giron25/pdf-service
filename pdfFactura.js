@@ -298,12 +298,16 @@ try {
 }
 
 try {
-  doc.moveDown(2);
+ let imageY = doc.y;
+
+if (imageY < notesStartY + 100) {
+  imageY = notesStartY + 100;
+}
 
 doc.image(
   path.join(__dirname, "assets/inflables-productos.png"),
   imageX,
-  doc.y,
+  imageY,
   {
     width: 200
   }
