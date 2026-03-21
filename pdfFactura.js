@@ -298,18 +298,25 @@ try {
 }
 
 try {
-// 🔵 Posición alineada con los totales
-const imageY = notesStartY + 60;
+const imagePath = path.join(__dirname, "assets/inflables-productos.png");
 
-// 🔵 Dibujar imagen
-doc.image(
-  path.join(__dirname, "assets/inflables-productos.png"),
-  imageX,
-  imageY,
-  {
-    width: 200
+// 🔵 Posición segura basada en notas
+let imageY = notesStartY + 50;
+
+// 🔵 Limitar para que no se salga de la página
+if (imageY > 650) {
+  imageY = 650;
+}
+
+if (fs.existsSync(imagePath)) {
+  try {
+    doc.image(imagePath, imageX, imageY, {
+      width: 200
+    });
+  } catch (error) {
+    console.log("Error imagen:", error.message);
   }
-);
+}
 
 } catch (e) {
   console.log("Error productos:", e.message);
