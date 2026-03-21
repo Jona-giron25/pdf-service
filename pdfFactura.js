@@ -288,7 +288,7 @@ doc
     width: notesWidth,
     lineGap: 2
   });
-  
+
 try {
   doc.image(path.join(__dirname, "assets/certificaciones.png"), notesX, doc.y + 20, {
     width: 220
@@ -298,9 +298,16 @@ try {
 }
 
 try {
-  doc.image(path.join(__dirname, "assets/inflables-productos.png"), imageX, notesStartY + 10, {
+  doc.moveDown(2);
+
+doc.image(
+  path.join(__dirname, "assets/inflables-productos.png"),
+  imageX,
+  doc.y,
+  {
     width: 200
-  });
+  }
+);
 } catch (e) {
   console.log("Error productos:", e.message);
 }
