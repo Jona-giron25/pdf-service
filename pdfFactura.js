@@ -19,11 +19,23 @@ function formatearTelefono(numero) {
 
   const limpio = numero.toString().replace(/\D/g, "");
 
-  if (limpio.length === 8) {
-    return limpio.slice(0, 4) + "-" + limpio.slice(4);
+  // Honduras (+504)
+  if (limpio.length === 11 && limpio.startsWith("504")) {
+    const n = limpio.slice(3);
+    return `+504 ${n.slice(0, 4)}-${n.slice(4)}`;
   }
 
-  return numero; // si no tiene 8 dígitos lo deja igual
+  // Honduras sin código
+  if (limpio.length === 8) {
+    return `+504 ${limpio.slice(0, 4)}-${limpio.slice(4)}`;
+  }
+
+  // Otros países (básico internacional)
+  if (limpio.length > 8) {
+    return `+${limpio}`;
+  }
+
+  return numero;
 }
 
 module.exports = function generarPDF(res, factura, items) {
@@ -87,7 +99,7 @@ doc.fillColor("#000")
    .fontSize(10)
    .text("SOLUCIONES GRÁFICAS EMPRESARIALES, S. DE R.L.", 40, 115)
    .text("RTN: 08019021340263", 40, 130)
-   .text("Tel: 2219-9820 / 9400-9145", 40, 145)
+   .text("Tel: +504 2219-9820 / +504 9400-9145", 40, 145)
    .text("ventas@brandsolutionshn.com", 40, 160);
 
 doc.fillColor(BLUE)
@@ -100,7 +112,7 @@ doc.fillColor("#000")
    .font("Helvetica-Bold")
    .text(`No. ${formatCotizacion(factura.id)}`, 455, 130)
    .text(`Fecha: ${factura.fecha}`, 455, 145)
-   .text(`Vendedor: ${factura.usuario || ""}`, 455, 160);
+   .text(`Vendedor: ${factura.vendedor || factura.usuario || "N/A"}`, 455, 160);
 
 
 doc.moveTo(35, 185)
@@ -239,11 +251,31 @@ items.forEach((item, i) => {
 
 });
 
+// ================= FIX DISEÑO PROFESIONAL =================
 
+// altura base real de la tabla (ajustada visualmente)
+const tableTop = startY + 30;
+
+// altura mínima dinámica según cantidad de items
+let minTableHeight = 300;
+
+// si hay muy pocos productos, aumenta espacio para balance visual
+if (items.length <= 3) {
+  minTableHeight = 340;
+}
+
+if (items.length === 1) {
+  minTableHeight = 380;
+}
+
+// aplicar corrección
+if (y < tableTop + minTableHeight) {
+  y = tableTop + minTableHeight;
+}
 
   /* ================= TOTALES ================= */
 
-  y += 10;
+  y += 20;
 
  doc.font("Helvetica-Bold").fontSize(9).fillColor(BLUE)
      .text(`SUBTOTAL: L ${formatearMoneda(factura.subtotal)}`, 430, y, { width: 140, align: "right" })
