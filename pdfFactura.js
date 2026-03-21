@@ -298,24 +298,28 @@ try {
 }
 
 try {
- let imageY = doc.y;
+// 🔵 Calcular posición dinámica
+let imageY = doc.y;
 
-if (imageY < notesStartY + 100) {
-  imageY = notesStartY + 100;
+// 🔵 Si está muy arriba, bájala un poco
+if (imageY < notesStartY + 80) {
+  imageY = notesStartY + 80;
 }
-const imagePath = path.join(__dirname, "assets/inflables-productos.png");
 
-if (fs.existsSync(imagePath)) {
-  try {
-    doc.image(imagePath, imageX, imageY, {
-      width: 200
-    });
-  } catch (error) {
-    console.log("Error cargando imagen:", error.message);
+// 🔵 Si se pasa demasiado abajo, súbela
+if (imageY > 650) {
+  imageY = 650;
+}
+
+// 🔵 Dibujar imagen
+doc.image(
+  path.join(__dirname, "assets/inflables-productos.png"),
+  imageX,
+  imageY,
+  {
+    width: 200
   }
-} else {
-  console.log("Imagen NO encontrada:", imagePath);
-}
+);
 
 } catch (e) {
   console.log("Error productos:", e.message);
