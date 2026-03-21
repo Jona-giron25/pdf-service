@@ -298,18 +298,8 @@ try {
 }
 
 try {
-// 🔵 Calcular posición dinámica
-let imageY = doc.y;
-
-// 🔵 Si está muy arriba, bájala un poco
-if (imageY < notesStartY + 80) {
-  imageY = notesStartY + 80;
-}
-
-// 🔵 Si se pasa demasiado abajo, súbela
-if (imageY > 650) {
-  imageY = 650;
-}
+// 🔵 Posición alineada con los totales
+const imageY = notesStartY + 40;
 
 // 🔵 Dibujar imagen
 doc.image(
