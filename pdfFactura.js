@@ -407,4 +407,9 @@ doc.text(contacto, (pageWidth - contactoWidth) / 2, footerY + 20, { lineBreak:fa
 }
 
   doc.end();
+  return {
+  nombreArchivo,
+  rutaCompleta
+};
+
 };

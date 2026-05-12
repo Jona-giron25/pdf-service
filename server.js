@@ -8,6 +8,7 @@ const app = express();
 // 🔐 CONFIGURACIÓN
 app.use(cors());
 app.use(express.json({ limit: "20mb" })); // 👈 aumentamos por imágenes base64
+app.use("/pdfs", express.static("pdfs"));
 
 // ================= RUTA PDF =================
 app.post("/cotizacion/pdf", (req, res) => {
@@ -68,7 +69,13 @@ app.post("/cotizacion/pdf", (req, res) => {
     console.log("ITEMS NORMALIZADOS:", itemsNormalizados.length);
 
     // ================= GENERAR PDF =================
-    generarPDF(res, facturaNormalizada, itemsNormalizados);
+    const resultado = generarPDF(
+  res,
+  facturaNormalizada,
+  itemsNormalizados
+);
+
+console.log("PDF generado:", resultado);
 
   } catch (error) {
     console.error("❌ ERROR GENERANDO PDF:", error);
